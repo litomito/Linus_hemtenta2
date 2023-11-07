@@ -9,7 +9,23 @@
         $name = $_POST['name'];
         $description = $_POST['description'];
         $price = $_POST['price'];
-        $image = $_POST['image'];
+
+        // Check if a file was uploaded.
+        if (isset($_FILES["image"]) && !empty($_FILES["image"]["tmp_name"])) {
+            $image = $_FILES["image"]['name'];
+            $tmpname = $_FILES['image']['tmp_name'];
+
+            // Move the uploaded file to the desired location.
+            if (move_uploaded_file($tmpname, "../img/$image")) {
+                // File uploaded successfully.
+            } else {
+                $error = error_get_last();
+                echo "Error: " . $error['message'];
+            }
+        } else {
+            // Handle the case where no file was uploaded.
+            $image = "";  // or set it to the existing image filename if needed
+        }
 
         // SQL query to update the product with the provided data.
         $sql = "UPDATE `products` SET `name` =  '$name', `description` = '$description', `price` = '$price',
@@ -43,12 +59,12 @@
                 $name = $row['name'];
                 $description = $row['description'];
                 $price = $row['price'];
-                $image = $row['image'];
+                $image = $row["image"];
                 $id = $row['id'];
             }
 ?>
 <h1>Products Update Form</h1>
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     <!-- Form fields to edit product information. -->
     <label for="name">Name:</label>
     <br>

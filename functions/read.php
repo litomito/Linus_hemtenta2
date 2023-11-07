@@ -7,6 +7,11 @@
     <title>Read</title>
     <!-- Link to an external Bootstrap CSS file for styling. -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        img {
+            width: 50px;
+        }
+    </style>
 </head>
 <body>
     <!-- Create the main container for displaying data from the 'products' table. -->
@@ -45,7 +50,7 @@
                     <td><?php echo $row["name"];?></td>
                     <td><?php echo $row["description"];?></td>
                     <td><?php echo $row["price"];?></td>
-                    <td><?php echo $row["image"];?></td>
+                    <td><?php echo"<img src='../img/" . $row['image'] . "'>";?></td>
                     <td>
                         <!-- Create 'Edit' and 'Delete' buttons for each product entry. -->
                         <a class="btn btn-info" href="update.php?id=<?php echo $row['id'];?>">Edit</a>&nbsp;

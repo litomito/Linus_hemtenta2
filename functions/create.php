@@ -12,7 +12,7 @@
     <!-- Create an HTML form for entering personal information. -->
     <div class="container">
         <h1>Personal information</h1>
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
 
             <!-- Input field for entering a name. -->
             <div id="name">
@@ -54,7 +54,13 @@
         $name = $_POST["name"];
         $description = $_POST["description"];
         $price = $_POST["price"];
-        $image = $_POST["image"];
+        $image = $_FILES["image"]['name'];
+        $tmpname = $_FILES['image']['tmp_name'];
+
+        if (!move_uploaded_file($tmpname, "../img/$image")) {
+            $error = error_get_last();
+            echo "Error: " . $error['message'];
+        }
 
         // SQL query to insert data into the 'products' table.
         $sql = "INSERT INTO `products` (`name`, `description`, `price`, `image`) VALUES
